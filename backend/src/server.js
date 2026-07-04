@@ -22,17 +22,16 @@ app.use(morgan("dev"));
 
 // ── CORS — allow the frontend origin ──────────────────────────────────────
 const allowedOrigins = [
-  process.env.FRONTEND_URL,               // set this on Render: https://sweetaroma-three.vercel.app
-  "https://sweetaroma-three.vercel.app",  // fallback hardcode (no trailing slash!)
+  process.env.FRONTEND_URL,
+  "https://sweetaroma-three.vercel.app",
   "http://localhost:3000",
   "http://localhost:8080",
   "http://localhost:5173",
-].filter(Boolean); // drop undefined if FRONTEND_URL isn't set
+].filter(Boolean);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. curl, Postman) and listed origins
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -49,11 +48,10 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // ── Health check ───────────────────────────────────────────────────────────
 app.get("/api/health", (req, res) => {
-  res.json({ success: true, message: "Sweet Aroma API is running", timestamp: new Date() });
+  res.json({ success: true, message: "The Bead Basket API is running 🧶", timestamp: new Date() });
 });
 
 // ── Admin key verification ─────────────────────────────────────────────────
-// POST /api/admin/verify  { key: "..." }  → { success: true/false }
 app.post("/api/admin/verify", express.json(), (req, res) => {
   const { key } = req.body ?? {};
   const secret = process.env.ADMIN_SECRET_KEY;
@@ -66,7 +64,7 @@ app.post("/api/admin/verify", express.json(), (req, res) => {
   res.json({ success: true });
 });
 
-// ── Admin API routes ───────────────────────────────────────────────────────
+// ── API routes ─────────────────────────────────────────────────────────────
 app.use("/api/cakes", cakeRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/categories", categoryRoutes);
@@ -82,7 +80,7 @@ app.use(errorHandler);
 // ── Start server ───────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`\n🎂  Sweet Aroma API running on http://localhost:${PORT}`);
+  console.log(`\n🧶  The Bead Basket API running on http://localhost:${PORT}`);
   console.log(`📋  Admin endpoints:`);
   console.log(`    GET/POST        /api/cakes`);
   console.log(`    GET/PUT/DELETE  /api/cakes/:id`);

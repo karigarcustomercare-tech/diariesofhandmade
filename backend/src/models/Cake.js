@@ -15,10 +15,7 @@ const cakeSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, "Category is required"],
-      enum: {
-        values: ["Birthday", "Anniversary", "Theme", "Cupcakes", "Desserts"],
-        message: "{VALUE} is not a valid category",
-      },
+      trim: true,
     },
     description: {
       type: String,
